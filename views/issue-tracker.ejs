@@ -34,6 +34,7 @@
                 <div class="issues__issue__card__action">
                   <% if (issue.status === 'open') { %>
                     <button>Assign</button>
+                    <button>Close</button>
                   <% } else if (issue.status === 'pending') { %>
                     <button>Close</button>
                   <% } %>

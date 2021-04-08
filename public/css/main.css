@@ -140,6 +140,10 @@ main {
   text-transform: uppercase;
 }
 
+.issues__issue__card__action button:last-of-type {
+  margin-left: 1em;
+}
+
 .issues__issue__card__action button:hover {
   background-color: var(--dark-green);
 }
