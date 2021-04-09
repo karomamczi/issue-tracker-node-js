@@ -1,3 +1,11 @@
+/**
+ * Uses Fetch API to send a PATCH request, which should update status property
+ * of the issues resource. When request is fulfilled checks if response
+ * is successful. For non successful requests shows alert. Otherwise it
+ * current client location to show refreshed data.
+ * @param {string} id Id of the issue for which status should be changed.
+ * @param {string} status New value of the status.
+ */
 function patch(id, status) {
   fetch('/issues/update-status/' + id, {
     method: 'PATCH',
