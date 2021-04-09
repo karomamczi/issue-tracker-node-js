@@ -13,7 +13,7 @@
   },
   {
     "id": 3,
-    "status": "close",
+    "status": "closed",
     "description": "Aute quis aliquip Lorem incididunt ipsum occaecat qui laborum fugiat et eu. Sit commodo officia irure dolore deserunt do esse quis. Duis culpa duis occaecat sint et consectetur minim irure tempor pariatur.\r\n",
     "title": "Mollit est esse fugiat proident dolore amet consectetur cillum duis voluptate consequat duis fugiat."
   },
@@ -31,7 +31,7 @@
   },
   {
     "id": 6,
-    "status": "close",
+    "status": "closed",
     "description": "Sint eu mollit Lorem veniam ex sunt minim ullamco. Amet deserunt aliqua mollit dolor tempor labore ex fugiat irure mollit velit voluptate. Pariatur nisi excepteur velit sit duis labore aliquip voluptate ex velit. Cupidatat cupidatat cillum commodo consectetur laborum Lorem pariatur. Lorem consequat ex et est et elit est qui eiusmod. Irure laborum mollit nulla laborum non.\r\n",
     "title": "Et duis aliquip irure et ea amet ex."
   },
@@ -67,7 +67,7 @@
   },
   {
     "id": 12,
-    "status": "close",
+    "status": "closed",
     "description": "Aliqua amet anim duis laboris aliqua. Nisi Lorem nisi labore amet amet ipsum ex anim quis voluptate cupidatat laboris. Ullamco aute dolore laboris fugiat esse consequat nisi sunt officia irure. Dolor officia cupidatat in reprehenderit pariatur quis sit adipisicing labore ex magna.\r\n",
     "title": "Eu sint laboris excepteur minim aliqua amet esse irure."
   },
@@ -91,7 +91,7 @@
   },
   {
     "id": 16,
-    "status": "close",
+    "status": "closed",
     "description": "Cillum nisi culpa quis eiusmod aliqua. Irure ea pariatur laboris consequat esse reprehenderit minim eiusmod non. Aliquip elit est consequat incididunt sit qui consequat adipisicing aliqua nisi ex enim culpa ea. Sint eiusmod tempor deserunt fugiat consectetur quis nulla exercitation Lorem et. Fugiat laborum esse qui ad reprehenderit ea anim ea nostrud proident.\r\n",
     "title": "Nisi do non et cillum ad veniam in."
   },
@@ -109,13 +109,13 @@
   },
   {
     "id": 19,
-    "status": "close",
+    "status": "closed",
     "description": "Laborum occaecat in qui dolor voluptate proident. Cupidatat quis minim quis Lorem aute. Veniam ut id esse cupidatat ut mollit cupidatat. Ex elit laboris occaecat sunt cillum enim.\r\n",
     "title": "Sint mollit deserunt voluptate veniam et culpa aliqua tempor Lorem fugiat fugiat cillum reprehenderit."
   },
   {
     "id": 20,
-    "status": "close",
+    "status": "closed",
     "description": "Reprehenderit cillum ea ut laboris quis quis. Velit laborum nisi reprehenderit est ullamco adipisicing cupidatat minim laboris. Excepteur adipisicing voluptate est do voluptate proident irure laborum culpa nulla reprehenderit esse. Amet anim ex velit ea elit anim. Exercitation aliquip sit ad cillum. Labore nisi sint laborum minim anim ipsum labore amet.\r\n",
     "title": "Lorem in officia consequat ipsum eu."
   }
