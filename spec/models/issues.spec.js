@@ -49,29 +49,29 @@ describe('Issues Model', () => {
 
   describe('Get index', () => {
     it('should get index when item of provided id exists in issues', async () => {
-      spyOn(Issue, 'getIssuesFromFile').and.returnValue([
+      const issues = [
         {
           id: 'id',
           title: 'test',
           description: 'test',
           status: Issue.STATUS.CLOSED,
         },
-      ]);
+      ];
 
-      await expectAsync(Issue.getIndex('id')).toBeResolvedTo(0);
+      expect(Issue.getIndex('id', issues)).toEqual(0);
     });
 
     it("should get nexgative index when item of provided id doesn't exists in issues", async () => {
-      spyOn(Issue, 'getIssuesFromFile').and.returnValue([
+      const issues = [
         {
           id: 'some-id',
           title: 'test',
           description: 'test',
           status: Issue.STATUS.CLOSED,
         },
-      ]);
+      ];
 
-      expect(await Issue.getIndex('other-id')).toEqual(-1);
+      expect(Issue.getIndex('other-id', issues)).toEqual(-1);
     });
   });
 

@@ -24,10 +24,9 @@ Issue.getIssuesFromFile = async () => {
 
 Issue.fetchAll = async () => await Issue.getIssuesFromFile();
 
-Issue.getIndex = async (id) => {
-  const issues = await Issue.getIssuesFromFile();
 
-  return Promise.resolve(issues.findIndex((issue) => issue.id === id));
+Issue.getIndex = (id, issues) => {
+  return issues.findIndex((issue) => issue.id === id);
 };
 
 const STATUS = {
@@ -58,7 +57,8 @@ Issue.saveIssues = (issues) => {
 };
 
 Issue.saveNewStatus = async (id, newStatus) => {
-  const index = await Issue.getIndex(id);
+  const issues = await Issue.getIssuesFromFile();
+  const index = await Issue.getIndex(id, issues);
   if (index === -1) {
     return Promise.reject(
       new ServerResponse(
@@ -69,7 +69,6 @@ Issue.saveNewStatus = async (id, newStatus) => {
     );
   }
 
-  const issues = await Issue.getIssuesFromFile();
   const issue = issues[index];
   const isValid = Issue.isValidStatusChange(issue.status, newStatus);
 
