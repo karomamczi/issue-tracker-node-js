@@ -42,7 +42,7 @@ describe('Issues Controller', () => {
     beforeEach(() => {
       reqSpy = jasmine.createSpy();
       resSpy = jasmine.createSpyObj('res', ['status', 'end']);
-      statusSpy = jasmine.createSpyObj('res', ['send']);
+      statusSpy = jasmine.createSpyObj('status', ['send']);
       resSpy.status.and.returnValue(statusSpy);
       spyOn(Issue, 'saveNewStatus');
 
