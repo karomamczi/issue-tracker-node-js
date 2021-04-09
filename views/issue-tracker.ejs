@@ -32,12 +32,12 @@
 
               <% if (issue.status !== 'closed') { %>
                 <div class="issues__issue__card__action">
-                  <% if (issue.status === 'open') { %>
-                    <button>Assign</button>
-                    <button>Close</button>
-                  <% } else if (issue.status === 'pending') { %>
-                    <button>Close</button>
-                  <% } %>
+                    <% if (issue.status === 'open') { %>
+                      <button class="issues__issue__card__action--assign" data-id="<%= issue.id %>" data-status="pending" type="submit">Assign</button>
+                    <% } %>
+                    <% if (issue.status !== 'closed') { %>
+                      <button class="issues__issue__card__action--close" data-id="<%= issue.id %>" data-status="closed" type="submit">Close</button>
+                    <% } %>
                 </div>
               <% } %>
           </li>
@@ -45,5 +45,27 @@
         </ul>
       </div>
     </main>
+    <script>
+      function patch(id, status) {
+        fetch('/issues/update-status/' + id, {
+          method: 'PATCH',
+          body: JSON.stringify({
+            status: status,
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        });
+      }
+
+      const assignButtons = document.getElementsByClassName('issues__issue__card__action--assign');
+      const closeButtons = document.getElementsByClassName('issues__issue__card__action--close');
+      const assignButtonsArr = Array.from(assignButtons);
+      const closeButtonsArr = Array.from(closeButtons);
+
+      assignButtonsArr.concat(closeButtonsArr).forEach(element => {
+        element.addEventListener('click', () => patch(element.dataset.id, element.dataset.status));
+      });
+    </script>
   </body>
 </html>
