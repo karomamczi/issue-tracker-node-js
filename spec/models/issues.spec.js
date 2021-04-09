@@ -16,13 +16,13 @@ describe('Issue Model', () => {
 
       Issue.resolveDataResponse(
         null,
-        '[{"id": 1, "title": "test", "description": "test", "status": "open"}]',
+        '[{"id": "id", "title": "test", "description": "test", "status": "open"}]',
         resolve
       );
 
       expect(resolve).toHaveBeenCalledWith([
         {
-          id: 1,
+          id: 'id',
           title: 'test',
           description: 'test',
           status: Issue.STATUS.OPEN,
@@ -35,7 +35,7 @@ describe('Issue Model', () => {
     it('should get issues from file', async () => {
       const expectedIssues = [
         {
-          id: 1,
+          id: 'id',
           title: 'test',
           description: 'test',
           status: Issue.STATUS.CLOSED,
@@ -51,27 +51,27 @@ describe('Issue Model', () => {
     it('should get index when item of provided id exists in issues', async () => {
       spyOn(Issue, 'getIssuesFromFile').and.returnValue([
         {
-          id: 2,
+          id: 'id',
           title: 'test',
           description: 'test',
           status: Issue.STATUS.CLOSED,
         },
       ]);
 
-      await expectAsync(Issue.getIndex(2)).toBeResolvedTo(0);
+      await expectAsync(Issue.getIndex('id')).toBeResolvedTo(0);
     });
 
     it("should get nexgative index when item of provided id doesn't exists in issues", async () => {
       spyOn(Issue, 'getIssuesFromFile').and.returnValue([
         {
-          id: 1,
+          id: 'some-id',
           title: 'test',
           description: 'test',
           status: Issue.STATUS.CLOSED,
         },
       ]);
 
-      expect(await Issue.getIndex(0)).toEqual(-1);
+      expect(await Issue.getIndex('other-id')).toEqual(-1);
     });
   });
 
@@ -121,8 +121,8 @@ describe('Issue Model', () => {
       Issue.getIndex.and.returnValue(-1);
 
       await expectAsync(
-        Issue.saveNewStatus(1, Issue.STATUS.OPEN)
-      ).toBeRejectedWith("Issue of id: 1 doesn't exist!");
+        Issue.saveNewStatus('some-id', Issue.STATUS.OPEN)
+      ).toBeRejectedWith("Issue of id: some-id doesn't exist!");
     });
 
     it('should reject status change is not valid ', async () => {
@@ -144,19 +144,19 @@ describe('Issue Model', () => {
 
     it('should save issues with the issue with updated status', async () => {
       const issue = {
-        id: 1,
+        id: 'some-id',
         title: 'test',
         description: 'test',
         status: Issue.STATUS.PENDING,
       };
       const otherIssue = {
-        id: 2,
+        id: 'other-id',
         title: 'test',
         description: 'test',
         status: Issue.STATUS.OPEN,
       };
       const updatedIssue = {
-        id: 1,
+        id: 'some-id',
         title: 'test',
         description: 'test',
         status: Issue.STATUS.CLOSED,
@@ -166,7 +166,7 @@ describe('Issue Model', () => {
       Issue.getIssuesFromFile.and.returnValue([issue, otherIssue]);
       Issue.isValidStatusChange.and.returnValue(true);
 
-      await Issue.saveNewStatus(1, newStatus);
+      await Issue.saveNewStatus('some-id', newStatus);
 
       expect(Issue.saveIssues).toHaveBeenCalledOnceWith([
         updatedIssue,
@@ -176,7 +176,7 @@ describe('Issue Model', () => {
 
     it('should resolve with success message', async () => {
       const issue = {
-        id: 1,
+        id: 'some-id',
         title: 'test',
         description: 'test',
         status: Issue.STATUS.CLOSED,
