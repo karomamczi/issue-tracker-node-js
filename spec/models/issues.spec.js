@@ -1,7 +1,7 @@
 const Issue = require('../../models/issue');
 const ServerResponse = require('../../models/server-message');
 
-describe('Issue Model', () => {
+describe('Issues Model', () => {
   describe('Resolve data response', () => {
     it('should resolve with empty array when error is passed', async () => {
       const resolve = jasmine.createSpy();
