@@ -1,9 +1,11 @@
 const Issue = require('../models/issue');
 
-exports.getIssues = (req, res, next) => {
+exports.getIssueTracker = (req, res, next) => {
   Issue.fetchAll().then((issues) => {
     res.render('issue-tracker', {
       issues,
     });
   });
 };
+
+exports.updateIssueStatus = (req, res, next) => {};
