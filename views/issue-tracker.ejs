@@ -55,6 +55,12 @@
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
           },
+        }).then((res) => {
+          if (!res.ok) {
+            alert('Can\'t update issue to ' + status + ' status!');
+          } else {
+            location.reload();
+          }
         });
       }
 
