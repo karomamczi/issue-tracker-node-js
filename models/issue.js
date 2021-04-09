@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const ServerResponse = require('./server-message');
 
 const dataPath = path.join(
   path.dirname(require.main.filename),
@@ -48,13 +49,24 @@ Issue.isValidStatusChange = (oldStatus, newStatus) => {
 };
 
 Issue.saveIssues = (issues) => {
-  fs.writeFile(dataPath, JSON.stringify(issues));
+  return new Promise((resolve, reject) => {
+    fs.writeFile(dataPath, JSON.stringify(issues), (err) => {
+      reject(err);
+    });
+    resolve();
+  });
 };
 
 Issue.saveNewStatus = async (id, newStatus) => {
   const index = await Issue.getIndex(id);
   if (index === -1) {
-    return Promise.reject('Issue of id: ' + id + " doesn't exist!");
+    return Promise.reject(
+      new ServerResponse(
+        404,
+        ['Issue of id: ' + id + " doesn't exist!"],
+        ServerResponse.STATUS.FAILURE
+      )
+    );
   }
 
   const issues = await Issue.getIssuesFromFile();
@@ -63,15 +75,33 @@ Issue.saveNewStatus = async (id, newStatus) => {
 
   if (!isValid) {
     return Promise.reject(
-      'Invalid status change from ' + issue.status + ' to ' + newStatus + '!'
+      new ServerResponse(
+        422,
+        [
+          'Invalid status change from ' +
+            issue.status +
+            ' to ' +
+            newStatus +
+            '!',
+        ],
+        ServerResponse.STATUS.FAILURE
+      )
     );
   }
 
   issue.status = newStatus;
 
-  Issue.saveIssues(issues);
+  try {
+    await Issue.saveIssues(issues);
+  } catch (e) {
+    return Promise.reject(
+      new ServerResponse(422, [e], ServerResponse.STATUS.FAILURE)
+    );
+  }
 
-  return Promise.resolve('Status ' + newStatus + ' set successfully!');
+  return Promise.resolve(
+    new ServerResponse(200, [], ServerResponse.STATUS.SUCCESS)
+  );
 };
 
 module.exports = Issue;

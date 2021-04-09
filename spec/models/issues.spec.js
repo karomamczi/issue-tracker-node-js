@@ -1,5 +1,5 @@
 const Issue = require('../../models/issue');
-const fs = require('fs');
+const ServerResponse = require('../../models/server-message');
 
 describe('Issue Model', () => {
   describe('Resolve data response', () => {
@@ -122,10 +122,16 @@ describe('Issue Model', () => {
 
       await expectAsync(
         Issue.saveNewStatus('some-id', Issue.STATUS.OPEN)
-      ).toBeRejectedWith("Issue of id: some-id doesn't exist!");
+      ).toBeRejectedWith(
+        new ServerResponse(
+          404,
+          ["Issue of id: some-id doesn't exist!"],
+          ServerResponse.STATUS.FAILURE
+        )
+      );
     });
 
-    it('should reject status change is not valid ', async () => {
+    it('should reject when status change is not valid ', async () => {
       const issue = {
         id: 1,
         title: 'test',
@@ -138,7 +144,17 @@ describe('Issue Model', () => {
       Issue.isValidStatusChange.and.returnValue(false);
 
       await expectAsync(Issue.saveNewStatus(1, newStatus)).toBeRejectedWith(
-        'Invalid status change from ' + issue.status + ' to ' + newStatus + '!'
+        new ServerResponse(
+          422,
+          [
+            'Invalid status change from ' +
+              issue.status +
+              ' to ' +
+              newStatus +
+              '!',
+          ],
+          ServerResponse.STATUS.FAILURE
+        )
       );
     });
 
@@ -174,6 +190,25 @@ describe('Issue Model', () => {
       ]);
     });
 
+    it('should reject when saving issues failed', async () => {
+      const issue = {
+        id: 'some-id',
+        title: 'test',
+        description: 'test',
+        status: Issue.STATUS.PENDING,
+      };
+      Issue.getIndex.and.returnValue(0);
+      Issue.getIssuesFromFile.and.returnValue([issue]);
+      Issue.isValidStatusChange.and.returnValue(true);
+      Issue.saveIssues.and.callFake(async () => Promise.reject('Not saved'));
+
+      await expectAsync(
+        Issue.saveNewStatus('some-id', Issue.STATUS.CLOSED)
+      ).toBeRejectedWith(
+        new ServerResponse(422, ['Not saved'], ServerResponse.STATUS.FAILURE)
+      );
+    });
+
     it('should resolve with success message', async () => {
       const issue = {
         id: 'some-id',
@@ -185,9 +220,10 @@ describe('Issue Model', () => {
       Issue.getIndex.and.returnValue(0);
       Issue.getIssuesFromFile.and.returnValue([issue]);
       Issue.isValidStatusChange.and.returnValue(true);
+      Issue.saveIssues.and.callFake(async () => Promise.resolve());
 
       await expectAsync(Issue.saveNewStatus(1, newStatus)).toBeResolvedTo(
-        'Status ' + newStatus + ' set successfully!'
+        new ServerResponse(200, [], ServerResponse.STATUS.SUCCESS)
       );
     });
   });
