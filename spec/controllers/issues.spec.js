@@ -29,6 +29,7 @@ describe('Issues Controller', () => {
 
       expect(resSpy.render).toHaveBeenCalledOnceWith('issue-tracker', {
         issues,
+        pageTitle: 'Issue Tracker',
       });
     });
   });

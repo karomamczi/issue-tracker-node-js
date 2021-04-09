@@ -4,6 +4,7 @@ exports.getIssueTracker = async (req, res) => {
   const issues = await Issue.fetchAll();
   res.render('issue-tracker', {
     issues,
+    pageTitle: 'Issue Tracker',
   });
 };
 
