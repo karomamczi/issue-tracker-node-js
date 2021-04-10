@@ -4,6 +4,6 @@ const issuesController = require('../controllers/issues');
 
 const router = express.Router();
 
-router.patch('/update-status/:id', issuesController.updateIssueStatus);
+router.patch('/:id/status', issuesController.updateIssueStatus);
 
 module.exports = router;

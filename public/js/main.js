@@ -7,7 +7,7 @@
  * @param {string} status New value of the status.
  */
 function patch(id, status) {
-  fetch('/issues/update-status/' + id, {
+  fetch('/issues/' + id + '/status', {
     method: 'PATCH',
     body: JSON.stringify({
       status: status,
